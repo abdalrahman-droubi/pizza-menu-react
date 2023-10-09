@@ -1,24 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./index.css";
+import data from "./data.json";
+import { useState } from "react";
+const { pizzaData } = data;
 function App() {
+  console.log(pizzaData);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
     </div>
+  );
+}
+function Header() {
+  return (
+    <header className="header">
+      <h1> Fast react pizza co.</h1>;
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu </h2>
+      <ul className="pizzas">
+        {pizzaData.map((ele, index) => (
+          <Pizzas data={ele} key={index} />
+        ))}
+      </ul>
+    </main>
+  );
+}
+
+function Footer() {
+  const [date, setDate] = useState();
+
+  setTimeout(() => {
+    setDate(new Date().toLocaleTimeString());
+  }, 1000);
+  return <footer className="footer"> {date} we are currently open</footer>;
+}
+function Pizzas({ data }) {
+  return (
+    <li className="pizza">
+      <img src={data.photoName} alt={data.name} />
+      <>
+        <h3>{data.name}</h3>
+        <p>{data.ingredients}</p>
+        <span>{data.price}</span>
+      </>
+    </li>
   );
 }
 
